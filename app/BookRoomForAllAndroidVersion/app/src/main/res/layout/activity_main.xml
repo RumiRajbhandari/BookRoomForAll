@@ -67,10 +67,10 @@
             android:layout_marginTop="8dp"
             android:text="Please select an image"
             android:textSize="24dp"
-            app:layout_constraintStart_toStartOf="@id/ivPreview"
-            app:layout_constraintTop_toTopOf="@id/ivPreview"
+            app:layout_constraintBottom_toBottomOf="@id/ivPreview"
             app:layout_constraintEnd_toEndOf="@id/ivPreview"
-            app:layout_constraintBottom_toBottomOf="@id/ivPreview"/>
+            app:layout_constraintStart_toStartOf="@id/ivPreview"
+            app:layout_constraintTop_toTopOf="@id/ivPreview" />
 
         <TextView
             android:id="@+id/tv_output"
@@ -87,7 +87,7 @@
 
         <ImageView
             android:id="@+id/iv_take_photo"
-            android:layout_width="126dp"
+            android:layout_width="92dp"
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="24dp"
@@ -95,30 +95,45 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_gallery"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
         <ImageView
             android:id="@+id/iv_gallery"
-            android:layout_width="126dp"
+            android:layout_width="93dp"
             android:layout_height="32dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_gallery"
             app:layout_constraintBottom_toBottomOf="@+id/iv_take_photo"
-            app:layout_constraintEnd_toStartOf="@+id/iv_save"
+            app:layout_constraintEnd_toStartOf="@+id/iv_speak"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_take_photo" />
+            app:layout_constraintStart_toEndOf="@+id/iv_take_photo"
+            android:foreground="?android:attr/selectableItemBackground"/>
+
+        <ImageView
+            android:id="@+id/iv_speak"
+            android:layout_width="93dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_speaker"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_gallery"
+            app:layout_constraintEnd_toStartOf="@id/iv_save"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_gallery"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
         <ImageView
             android:id="@+id/iv_save"
-            android:layout_width="127dp"
+            android:layout_width="93dp"
             android:layout_height="32dp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_save_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/iv_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/iv_gallery" />
+            app:layout_constraintStart_toEndOf="@+id/iv_speak"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.ThumbnailUtils
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.DisplayMetrics
 import android.view.View
 import android.widget.Toast
@@ -13,10 +14,14 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.FileNotFoundException
 import java.io.IOException
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var characterClassifier: CharacterClassifier
+    var tts: TextToSpeech? = null
+    var outputText = ""
+
     val RESULT_LOAD_IMG = 111
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +42,10 @@ class MainActivity : AppCompatActivity() {
 
         iv_gallery.setOnClickListener {
             getImageFromAlbum()
+        }
+
+        iv_speak.setOnClickListener {
+            speak()
         }
     }
 
@@ -106,11 +115,11 @@ class MainActivity : AppCompatActivity() {
         val preprocessedImage = ImageUtils.prepareImageForClassification(squareBitmap)
 
         val recognitions = characterClassifier.recognizeImage(preprocessedImage)
-        if (recognitions.isNotEmpty())
-            tv_output.text = String.format("Output: %s", recognitions.get(0).title)
-        else
+        if (recognitions.isNotEmpty()) {
+            outputText = recognitions[0].title
+            tv_output.text = String.format("Output: %s", outputText)
+        } else
             tv_output.text = String.format("Output: ")
-
     }
 
     private fun getScreenWidth(): Int {
@@ -143,5 +152,24 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun speak() {
+        tts = TextToSpeech(this, TextToSpeech.OnInitListener { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                var result = tts?.setLanguage(Locale("nep", "NEP"))
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    Toast.makeText(this, "Lang not supported", Toast.LENGTH_SHORT).show()
+                } else {
+                    tts?.speak(outputText, TextToSpeech.QUEUE_ADD, null)
+                }
+            }
+        })
+    }
+
+    override fun onDestroy() {
+        tts?.stop()
+        tts?.shutdown()
+        super.onDestroy()
     }
 }
